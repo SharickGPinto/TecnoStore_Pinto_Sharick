@@ -1,20 +1,22 @@
 
-package MODELO;
+package modelo;
 
 
-public class Celulares {
+public class Celular {
     private int id;
-    private String marca, modelo, sistemaOS, gama;
-    private int precio, stock;
+    private String marca, modelo, sistemaOS;
+    private CategoriaGama gama;
+    private int  stock;
+    private double precio;
 
-    public Celulares(int id, String marca, String modelo, String sistemaOS, String gama, int precio, int stock) {
+    public Celular(int id, String marca, String modelo, String sistemaOS, CategoriaGama gama, int stock, double precio) {
         this.id = id;
         this.marca = marca;
         this.modelo = modelo;
         this.sistemaOS = sistemaOS;
         this.gama = gama;
-        this.precio = precio;
         this.stock = stock;
+        this.precio = precio;
     }
 
     public int getId() {
@@ -49,20 +51,12 @@ public class Celulares {
         this.sistemaOS = sistemaOS;
     }
 
-    public String getGama() {
+    public CategoriaGama getGama() {
         return gama;
     }
 
-    public void setGama(String gama) {
+    public void setGama(CategoriaGama gama) {
         this.gama = gama;
-    }
-
-    public int getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(int precio) {
-        this.precio = precio;
     }
 
     public int getStock() {
@@ -72,5 +66,13 @@ public class Celulares {
     public void setStock(int stock) {
         this.stock = stock;
     }
-    
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+  
 }

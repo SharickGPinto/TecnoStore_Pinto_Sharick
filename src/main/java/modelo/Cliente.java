@@ -1,11 +1,11 @@
 
-package MODELO;
+package modelo;
 
-public class Clientes {
+public class Cliente {
     private int id;
     private String nombre, identificacion, correo, telefono;
 
-    public Clientes(int id, String nombre, String identificacion, String correo, String telefono) {
+    public Cliente(int id, String nombre, String identificacion, String correo, String telefono) {
         this.id = id;
         this.nombre = nombre;
         this.identificacion = identificacion;

@@ -1,5 +1,5 @@
 
-package PERSISTENCIA;
+package persistencia;
 
 
 public class ClienteDAO {
