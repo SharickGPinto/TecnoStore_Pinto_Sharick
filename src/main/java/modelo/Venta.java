@@ -2,6 +2,7 @@
 package modelo;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Venta {
@@ -18,10 +19,16 @@ public class Venta {
         this.id = id;
         this.cliente = cliente;
         this.fecha = fecha;
-        this.items = items;
         this.totalSinIva = totalSinIva;
         this.iva = iva;
         this.totalConIva = totalConIva;
+        
+        if(items == null){
+            this.items = new ArrayList<>();
+        }else{
+            this.items = items;
+        }
+            calcularTotal();
     }
 
     public int getId() {
@@ -53,7 +60,12 @@ public class Venta {
     }
 
     public void setItems(List<ItemVenta> items) {
-        this.items = items;
+        if(items == null){
+            this.items = new ArrayList<>();
+        }else{
+         this.items = items;   
+        }
+        calcularTotal();
     }
 
     public double getTotalSinIva() {
@@ -79,5 +91,24 @@ public class Venta {
     public void setTotalConIva(double totalConIva) {
         this.totalConIva = totalConIva;
     }
+
+
+       public void calcularTotal (){
+       double suma = 0;
+           for (int i = 0; i < items.size(); i++) {
+               suma += items.get(i).getSubtotal();
+                              
+           }
+           
+           this.totalSinIva = suma;
+           this.iva = suma * 0.19;
+           this.totalConIva = this.totalSinIva + this.iva;
+      
+    }
+       
+       public void agregarItem(ItemVenta item){
+           this.items.add(item);
+           calcularTotal();
+       }
   
 }

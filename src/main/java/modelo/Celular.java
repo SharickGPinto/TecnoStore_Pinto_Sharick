@@ -74,5 +74,16 @@ public class Celular {
     public void setPrecio(double precio) {
         this.precio = precio;
     }
+
+    @Override
+    public String toString() {
+      return """
+               Marca  %s
+               Modelo %s
+               SistemaOS   %s
+               Categoria   %
+               """.formatted(marca,modelo,sistemaOS,gama);   
+    }
+    
   
 }
