@@ -1,8 +1,9 @@
 
 package modelo;
 
+import java.io.Serializable;
 
-public class Celular {
+public class Celular implements Serializable{
     private int id;
     private String marca, modelo, sistemaOS;
     private CategoriaGama gama;
@@ -81,9 +82,9 @@ public class Celular {
                Marca  %s
                Modelo %s
                SistemaOS   %s
-               Categoria   %
+               Categoria   %s
                """.formatted(marca,modelo,sistemaOS,gama);   
     }
     
-  
+
 }
