@@ -1,45 +1,12 @@
 package controlador;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import modelo.Celular;
-import java.io.File;
+
 
 public class GestorCelulares {
 
     private ArrayList<Celular> celulares = new ArrayList<>();
-    private final String ARCHIVO = "Celulares.dat";
-
-    public GestorCelulares() {
-        cargar();
-    }
-
-    /*
-    En esta parte es para guardar .dat = binario
-    
-     */
-    public void cargar() {
-        File f = new File(ARCHIVO);
-        if (!f.exists()) {
-            return;
-        }
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ARCHIVO))) {
-            celulares = (ArrayList<Celular>) ois.readObject();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void guardar() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARCHIVO))) {
-            oos.writeObject(celulares);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     /*
     Aca se empieza a utilizar Stream API
@@ -47,6 +14,8 @@ public class GestorCelulares {
     eliminar, actualizar y descontar stock
      */
     
+    
+    // Si cumple la condicion de registrar tiene que verificar si el id existe, si existe genera error, si no existe se registra dentro del ArrayList de celulares.
     public void registrar(Celular c) {
         boolean existe = celulares.stream().anyMatch(x -> x.getId() == c.getId());
         if (existe) {
@@ -54,10 +23,11 @@ public class GestorCelulares {
             return;
         }
         celulares.add(c);
-        guardar();
         System.out.println("Celular registrado.");
     }
-
+    
+    
+//Se verifica si hay celulares, si no hay se muestra un mensaje, pero si existe muestra los celulares que existen.
     public void listar() {
         if (celulares.isEmpty()) {
             System.out.println("NO HAY CELULARES");
@@ -66,7 +36,9 @@ public class GestorCelulares {
 
         celulares.forEach(System.out::println);
     }
-
+    
+    
+    // Se filtra por el id y debe devolver el celular que tenga ese id, si no existe un celular que le pertenezca ese id, retorna en nulo.
     public Celular buscarPorId(int id) {
         return celulares.stream()
                 .filter(c -> c.getId() == id)
@@ -74,18 +46,19 @@ public class GestorCelulares {
                 .orElse(null);
     }
 
+    //Se busca el id del celular, si existe se elimina, si no existe un celular con ese id no hace nada.
     public void eliminar(int id) {
 
         boolean eliminado = celulares.removeIf(c -> c.getId() == id);
 
         if (eliminado) {
-            guardar();
             System.out.println("Celular eliminado.");
         } else {
             System.out.println("No existe un celular con ese ID.");
         }
     }
-
+    
+    //Aca se busca el id, si no existe se termina el proceso de buscar id, pero si existe se empieza a actualizar el celular obteniendo sus referencias
     public void actualizar(Celular c) {
         Celular existe = buscarPorId(c.getId());
         if (existe == null) {
@@ -98,11 +71,10 @@ public class GestorCelulares {
         existe.setGama(c.getGama());
         existe.setStock(c.getStock());
         existe.setPrecio(c.getPrecio());
-
-        guardar();
         System.out.println("Celular Actualizado");
     }
-
+    
+    // Aca se busca el celular mediante el id, si el celular no existe no se descuenta, pero si no hay stock suficiente se cancela y deja el stock como esta, pero si hay venta se descuenta del stock
     public boolean descontarStock(int idCelular, int cantidad) {
         Celular c = buscarPorId(idCelular);
         if (c == null) {
@@ -116,7 +88,6 @@ public class GestorCelulares {
         }
 
         c.setStock(c.getStock() - cantidad);
-        guardar();
         return true;
     }
 
