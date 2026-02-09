@@ -1,9 +1,8 @@
 
 package modelo;
 
-import java.io.Serializable;
 
-public class Celular implements Serializable{
+public class Celular {
     private int id;
     private String marca, modelo, sistemaOS;
     private CategoriaGama gama;
@@ -79,11 +78,14 @@ public class Celular implements Serializable{
     @Override
     public String toString() {
       return """
+               ID  %s
                Marca  %s
                Modelo %s
                SistemaOS   %s
                Categoria   %s
-               """.formatted(marca,modelo,sistemaOS,gama);   
+               Precio %s
+               stock %s
+               """.formatted(id,marca,modelo,sistemaOS,gama, precio, stock);   
     }
     
 

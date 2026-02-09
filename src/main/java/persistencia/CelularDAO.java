@@ -1,13 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package persistencia;
 
-/**
- *
- * @author camper
- */
-public class CelularDAO {
+import java.util.ArrayList;
+import modelo.Celular;
+
+public interface CelularDAO {
+    
+   void registrar(Celular c);
+   
+    ArrayList<Celular> listar ();
+   
+   Celular buscar(int id);
+   
+   void eliminar (int id);
+   
+   void actualizar (Celular c, int id);
+   
+   boolean descontarStock (int idCelular, int cantidad);
     
 }

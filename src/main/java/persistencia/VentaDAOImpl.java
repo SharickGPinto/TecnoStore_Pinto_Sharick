@@ -1,7 +1,6 @@
 
 package persistencia;
 
-
-public class VentaDAO {
+public class VentaDAOImpl  {
     
 }

@@ -1,5 +1,5 @@
 
-package controlador;
+package servicios;
 
 
 public class GestorVentas {
