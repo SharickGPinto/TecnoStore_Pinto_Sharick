@@ -15,33 +15,41 @@
 
 # Tabla de Contenido
 
-<h6 align=center> 1. Introducción </h6> 
-<h6 align=center> 2. Caso de Estudio </h6> 
-<h6 align=center> 3. Descripción del proyecto </h6>
-<h6 align=center> 4. Requisitos Funcionales y No Funcionales </h6>
-<h6 align=center> 5. Modelo de Clases (POO) </h6> 
-<h6 align=center> 6. Diseño de Persistencia (MySQL + JDBC) </h6>
-<h6 align=center> 7. Estructura de la Base de Datos </h6> 
-<h6 align=center> 8. Implementación de Colecciones y Stream API </h6> 
-<h6 align=center> 9. Validaciones y Manejo de Excepciones </h6>
-<h6 align=center> 10. Patrones de Diseño y Principios SOLID </h6>
-<h6 align=center> 11. Ejemplos de Ejecución en Consola </h6>
-<h6 align=center> 12. Reportes Generados (TXT y consultas) </h6> 
-<h6 align=center> 13. Cierre y Resultados </h6>
+<h6 align=center> 1. Introducción </h6>
+<h6 align=center> 2. Caso de Estudio </h6>
+<h6 align=center> 3. Descripción del Proyecto </h6> 
+<h6 align=center> 4. Requerimientos </h6> 
+<h6 align=center> 5. Estructura del Código (cómo está organizado) </h6> 
+<h6 align=center> 6. Base de Datos (modelo y tablas) </h6>
+<h6 align=center> 7. Persistencia JDBC (cómo se guarda todo) </h6> 
+<h6 align=center> 8. Reportes (Stream API) </h6> 
+<h6 align=center> 9. Archivo reporte_ventas.txt </h6> 
+<h6 align=center> 10. Cómo Ejecutar (pasos cortos) </h6>
 
----
+
 
 
 ---
 # Introducción
 
-TecnoStore es una tienda que vende celulares de diferentes marcas y gamas, pero el problema es que todo lo están llevando a mano en hojas de cálculo, y eso termina siendo un desorden: se repite información, se cometen errores y es difícil tener control real del inventario y las ventas. Por eso nace la idea de hacer un sistema en consola con Java que permita manejar de forma más organizada el catálogo de celulares, los clientes y las ventas, y así automatizar lo que antes se hacía “a la mala”.
+TecnoStore es una tienda minorista de celulares que llevaba el control de inventario, ventas y clientes de forma manual (o sea: Excel por todos lados, datos repetidos y errores).
+La idea del proyecto es pasar eso a un sistema de consola en Java que permita:
 
-En este proyecto se va a documentar todo el proceso que se siguió para construir el sistema: desde cómo se organizaron las clases (modelo, controladores, utilidades, etc.), hasta cómo se aplicaron cosas importantes como POO, colecciones, manejo de excepciones, Stream API y un patrón de diseño (por ejemplo Strategy). La idea es que no sea solo “un programa que corre”, sino un sistema que tenga lógica clara y que se pueda entender y mantener.
+ * manejar catálogo de celulares (CRUD),
 
-También se explica cómo se manejan las reglas clave del sistema, como validar datos (por ejemplo: que el precio y stock sean positivos, que la identificación del cliente no se repita, y que el correo tenga un formato válido), además del cálculo del total de la venta incluyendo el IVA del 19% y la actualización del stock cuando se vende un celular.
+* registrar clientes con validaciones reales,
 
-Finalmente, se muestran pruebas y ejemplos de ejecución en consola, y se deja lista la parte de conexión con MySQL usando JDBC para guardar las ventas y su detalle. Además, se incluye la generación del archivo reporte_ventas.txt, que resume todas las ventas realizadas, junto con reportes usando Stream API como celulares con stock bajo, top de vendidos y ventas por mes.
+* registrar ventas con IVA del 19%,
+
+* descontar stock automáticamente,
+
+* guardar ventas en MySQL usando JDBC,
+
+* sacar reportes en consola usando Stream API,
+
+* y generar un archivo reporte_ventas.txt con el resumen de ventas.
+
+Aquí está documentado lo que se hizo en el proyecto, cómo está organizado el código, la base de datos y cómo se ejecuta.
 
 
 ---
@@ -49,9 +57,17 @@ Finalmente, se muestran pruebas y ejemplos de ejecución en consola, y se deja l
 
 # 2. Caso de Estudio
 
-En este caso, TecnoStore tiene un problema súper típico: están manejando ventas, clientes e inventario en hojas de cálculo, todo manual, y eso se vuelve un caos. Se termina repitiendo información, se cometen errores (porque obvio, todo lo hace una persona a mano), y cuando necesitan saber algo básico como cuánto stock queda o qué se vendió más, toca ponerse a revisar tablas y eso no es confiable ni rápido.
+### El problema principal era el típico:
 
-La tienda necesita un sistema más serio y centralizado que les permita llevar el control real del negocio: registrar celulares con sus datos completos, guardar clientes de forma correcta (sin duplicados), y registrar ventas calculando el total con IVA del 19%, además de ir descontando el stock automáticamente. La idea no es solo “guardar datos”, sino que el sistema tenga reglas claras para que no se metan datos mal (por ejemplo: precios negativos, stock raro, correos inválidos o clientes repetidos).
+* datos dispersos (cada quien tenía su “versión” de inventario),
+
+* stock mal llevado (venden y se les “olvida” restar),
+
+* clientes repetidos (no hay identificación única),
+
+* y reportes hechos manualmente, poco confiables.
+
+La solución fue hacer un sistema simple pero serio: un menú central en consola, reglas claras (precio/stock, correo, IVA, etc.) y persistencia real en MySQL para que no dependa de la RAM.
 
 ---
 
@@ -59,46 +75,147 @@ La tienda necesita un sistema más serio y centralizado que les permita llevar e
 
 Este proyecto tiene como objetivo diseñar y desarrollar un sistema para TecnoStore, una tienda de celulares que necesita dejar atrás el manejo manual en hojas de cálculo. La idea es construir una solución en Java (consola), apoyada por MySQL, que permita llevar un control más organizado, consistente y seguro de la información, evitando errores típicos como datos repetidos, registros incompletos o inventario mal calculado.
 
-# 4. Requisitos Funcionales y No Funcionales
+# 4. Requisitos Funcionales 
 
-## Requisitos Funcionales
+## Gestión de Celulares
 
-CRUD de Celulares: registrar, listar, buscar por ID, actualizar y eliminar.
-Validaciones de Celulares: precio > 0 y stock ≥ 0.
+* CRUD completo (registrar, actualizar, eliminar, listar).
 
-CRUD de Clientes: registrar, listar, buscar (por identificación), actualizar y eliminar.
+* Campos: id, marca, modelo, precio, stock, sistema operativo, gama (Alta/Media/Baja).
 
-Validaciones de Clientes: identificación única y correo con formato válido.
-Gestión de Ventas:
-registrar una venta seleccionando un cliente y uno o varios celulares (con cantidad).
+* Validación: precio > 0 y stock >= 0.
 
-calcular subtotal, IVA (19%) y total final.
-descontar stock automáticamente según lo vendido.
+## Gestión de Clientes
 
-guardar la venta y su detalle en MySQL con JDBC.
+* Campos: id, nombre, identificación, correo, teléfono.
 
-Reportes en consola (usando Stream API):
-celulares con stock bajo (menor a 5).
-Top 3 celulares más vendidos.
-ventas totales por mes.
-Archivo de salida:
-generar reporte_ventas.txt con el resumen de las ventas realizadas.
+* Validación: correo con formato válido.
+
+* Validación: identificación única (no se repite).
+
+## Gestión de Ventas
+
+* Registrar venta seleccionando cliente + celulares.
+
+* Calcular total con IVA del 19%.
+
+* Actualizar stock del celular vendido.
+
+* Guardar venta y detalle en MySQL usando JDBC.
+
+## Reportes
+
+* Celulares con stock bajo (<5).
+
+* Top 3 más vendidos.
+
+* Ventas totales por mes.
+
+* Los cálculos se hacen con Stream API + colecciones (no a mano).
+
+## Persistencia y archivos
+
+* Generar reporte_ventas.txt con resumen de ventas.
+
+* Manejo de excepciones con try-with-resources.
+
+## Patrones
+
+* Se usa Strategy (descuento opcional) como extra del proyecto, sin romper los requisitos del enunciado.
 
 ---
 
-## Requisitos No Funcionales
 
-Aplicación de consola en Java, con menús claros y flujo entendible.
+# 5. Estructura del Código
+#### La idea fue mantenerlo simple y práctico:
 
-POO real: encapsulamiento + herencia + composición (ej: Venta→Items, Cliente→Persona).
+```
+TecnoStore/
+├─ src/
+│  └─ main/
+│     └─ java/
+│        └─ tecnestore/
+│           ├─ modelo/
+│           │  ├─ Celular.java
+│           │  ├─ Cliente.java
+│           │  ├─ Venta.java
+│           │  ├─ ItemVenta.java
+│           │  └─ CategoriaGama.java
+│           │
+│           ├─ servicios/
+│           │  ├─ GestorCelulares.java
+│           │  ├─ GestorClientes.java
+│           │  └─ GestorVentas.java
+│           │
+│           ├─ persistencia/
+│           │  ├─ ConexionDB.java
+│           │  ├─ dao/
+│           │  │  ├─ CelularDAO.java
+│           │  │  ├─ ClienteDAO.java
+│           │  │  └─ VentaDAO.java
+│           │  └─ daoimpl/
+│           │     ├─ CelularDAOImpl.java
+│           │     ├─ ClienteDAOImpl.java
+│           │     └─ VentaDAOImpl.java
+│           │
+│           ├─ utilidades/
+│           │  ├─ Validador.java
+│           │  ├─ ReporteUtils.java
+│           │  └─ ArchivoUtils.java
+│           │
+│           └─ vista/
+│              └─ Main.java
+```
 
-Principios SOLID (al menos lo básico bien aplicado: separar responsabilidades y no mezclar todo).
+---
 
-Patrón de diseño: implementar Strategy (descuentos) o el patrón que el proyecto permita.
+# 6. Base de Datos (MySQL)
 
-Manejo de excepciones y uso de try-with-resources (archivos y JDBC).
-Integridad de datos: evitar duplicados, valores inválidos y ventas sin stock suficiente.
+```
+CREATE TABLE cliente (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(80) NOT NULL,
+    identificacion VARCHAR(30) NOT NULL UNIQUE,
+    correo VARCHAR(120) NOT NULL,
+    telefono VARCHAR(20) NOT NULL
+);
 
-Código mantenible: evitar código espagueti separando modelo / controlador / persistencia / util.
+-- CELULAR
+CREATE TABLE celular (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    marca VARCHAR(60) NOT NULL,
+    modelo VARCHAR(60) NOT NULL,
+    sistema_os VARCHAR(40) NOT NULL,
+    gama ENUM('ALTA', 'MEDIA', 'BAJA') NOT NULL,
+    precio DOUBLE NOT NULL,
+    stock INT NOT NULL
+);
 
-Si quieres, te lo dejo con el mismo formato de tu documento (títulos numerados y estilo más “formal”), pero esto ya está 100% adaptado a TecnoStore y a lo que te piden.
+-- VENTA
+CREATE TABLE venta (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id_cliente INT NOT NULL,
+    fecha DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    total_sin_iva DOUBLE NOT NULL,
+    iva DOUBLE NOT NULL,
+    total_con_iva DOUBLE NOT NULL,
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+);
+
+--ITEM VENTA
+CREATE TABLE item_venta (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id_venta INT NOT NULL,
+    id_celular INT NOT NULL,
+    cantidad INT NOT NULL CHECK (cantidad > 0),
+    subtotal DOUBLE NOT NULL,
+    FOREIGN KEY (id_venta)   REFERENCES venta(id)
+        ON DELETE CASCADE,
+    FOREIGN KEY (id_celular) REFERENCES celular(id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+);
+
+```
