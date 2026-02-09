@@ -14,15 +14,15 @@ public class ConexionDB {
 //    private String password="123";
     
     public Connection conectar() {
-        Connection c = null;
+        Connection con = null;
         try {
-            c = DriverManager.getConnection("jdbc:mysql://localhost:3306/tecnostore_db", "root", "sharick.pinto");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/tecnostore_db", "root", "sharick.pinto");
             System.out.println("Conexion exitosa");
 //            c=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+database,user,password);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return c;
+        return con;
     }
 }
 
