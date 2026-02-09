@@ -4,19 +4,20 @@ package modelo;
 
 public class Celular {
     private int id;
-    private String marca, modelo, sistemaOS;
+    private String  modelo, sistemaOS;
     private CategoriaGama gama;
     private int  stock;
     private double precio;
+    private Marca id_marca;
 
-    public Celular(int id, String marca, String modelo, String sistemaOS, CategoriaGama gama, int stock, double precio) {
+    public Celular(int id, String modelo, String sistemaOS, CategoriaGama gama, int stock, double precio, Marca id_marca) {
         this.id = id;
-        this.marca = marca;
         this.modelo = modelo;
         this.sistemaOS = sistemaOS;
         this.gama = gama;
         this.stock = stock;
         this.precio = precio;
+        this.id_marca = id_marca;
     }
 
     public int getId() {
@@ -25,14 +26,6 @@ public class Celular {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
     }
 
     public String getModelo() {
@@ -75,6 +68,15 @@ public class Celular {
         this.precio = precio;
     }
 
+    public Marca getId_marca() {
+        return id_marca;
+    }
+
+    public void setId_marca(Marca id_marca) {
+        this.id_marca = id_marca;
+    }
+
+
     @Override
     public String toString() {
       return """
@@ -85,7 +87,7 @@ public class Celular {
                Categoria   %s
                Precio %s
                stock %s
-               """.formatted(id,marca,modelo,sistemaOS,gama, precio, stock);   
+               """.formatted(id,id_marca,modelo,sistemaOS,gama, precio, stock);   
     }
     
 
