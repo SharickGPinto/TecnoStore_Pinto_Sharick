@@ -1,25 +1,24 @@
 
-package persistencia;
+package persistencia.implementar;
 
 import java.util.ArrayList;
-import modelo.Celular;
+import modelo.Venta;
+import persistencia.VentaDAO;
 
-
-public class CelularDAOimpl implements CelularDAO{
-    ConexionDB c = new ConexionDB();
+public class VentaDAOImpl implements VentaDAO{
 
     @Override
-    public void registrar(Celular c) {
+    public void registrar(Venta v) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public ArrayList<Celular> listar() {
+    public ArrayList<Venta> listar() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Celular buscar(int id) {
+    public Venta buscar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -29,15 +28,13 @@ public class CelularDAOimpl implements CelularDAO{
     }
 
     @Override
-    public void actualizar(Celular c, int id) {
+    public void actualizar(Venta v, int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public boolean descontarStock(int idCelular, int cantidad) {
+    public boolean descontarStock(int idVenta, int cantidad) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
-    
     
 }

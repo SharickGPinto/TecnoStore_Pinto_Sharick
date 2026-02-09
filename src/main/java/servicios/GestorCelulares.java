@@ -3,7 +3,7 @@ package servicios;
 import java.util.ArrayList;
 import modelo.Celular;
 import persistencia.CelularDAO;
-import persistencia.CelularDAOimpl;
+import persistencia.implementar.CelularDAOimpl;
 
 public class GestorCelulares {
 

@@ -5,7 +5,7 @@ package servicios;
 import java.util.ArrayList;
 import modelo.Cliente;
 import persistencia.ClienteDAO;
-import persistencia.ClienteDAOImple;
+import persistencia.implementar.ClienteDAOImple;
 
 public class GestorClientes {
     
