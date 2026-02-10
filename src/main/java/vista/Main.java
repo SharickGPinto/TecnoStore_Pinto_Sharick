@@ -5,48 +5,43 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int op;
-        
+       int op = 0;
         do {
             System.out.println("""
-            ==========================================
-                SISTEMA TECNOSTORE - MENU PRINCIPAL
-            ==========================================
-            1. Gestionar Celulares
-            2. Gestionar Clientes
-            3. Gestionar Ventas
-            4. Salir
-            ==========================================
-            """);
-            System.out.print("Seleccione una opcion: ");
-            op = sc.nextInt();
-            
-            while (op < 1 || op > 4) {
+                               ******************************
+                               Bienvenido a TecnoStore
+                               1.   Gestionar Marcas
+                               2.   Gestionar Celulares
+                               3.   Gestionar Clientes
+                               4.   Gestionar Ventas
+                               5.   Salir
+                               """);
+            op = new Scanner(System.in).nextInt();
+            while (op < 1 || op > 5) {
                 System.out.println("Error, opcion no valida");
-                System.out.print("Seleccione una opcion: ");
-                op = sc.nextInt();
+                op = new Scanner(System.in).nextInt();
             }
-            
             switch (op) {
                 case 1:
-                    Menucelular menuCel = new Menucelular();
-                    menuCel.menu();
+                    Menumarca mm = new Menumarca();
+                    mm.menu();
                     break;
                 case 2:
-                    Menucliente menuCli = new Menucliente();
-                    menuCli.menu();
+                    Menucelular mc = new Menucelular();
+                    mc.menu();
                     break;
                 case 3:
-                    Menuventa menuVen = new Menuventa();
-                    menuVen.menu();
+                    Menucliente mcl = new Menucliente();
+                    mcl.menu();
                     break;
                 case 4:
-                    System.out.println("Gracias por usar el sistema TecnoStore c:");
+                    Menuventa mv = new Menuventa();
+                    mv.menu();
+                    break;
+                case 5:
+                    System.out.println("Gracias por usar TecnoStore!");
                     break;
             }
-        } while (op != 4);
-        
-        sc.close();
+        } while (op != 5);
     }
 }
