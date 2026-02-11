@@ -103,15 +103,41 @@ public class Menuventa {
             for (ItemVenta it : items) {
                 System.out.println("- " + it.getCelular().getModelo() + " x" + it.getCantidad() + " = " + it.getSubtotal());
             }
-            System.out.println("\nTotal sin IVA: " + venta.getTotalSinIva());
-            System.out.println("Total con IVA (trigger): " + venta.getTotalConIva());
+            System.out.println("\nTotal sin IVA : " + venta.getTotalSinIva());
+            System.out.println("Total con IVA : " + venta.getTotalConIva());
         }
     }
 
     private void listar() {
         System.out.println("\n--- LISTADO DE VENTAS ---");
-        gv.listar();
+
+    ArrayList<Venta> ventas = gv.obtenerVentas();
+
+    if (ventas.isEmpty()) {
+        System.out.println("No hay ventas registradas.");
+        return;
     }
+
+    System.out.println("""
+    =====================================================================================
+    | ID |   FECHA       | ID CLIENTE | NOMBRE CLIENTE        |        TOTAL          |
+    =====================================================================================
+    """);
+
+    for (Venta v : ventas) {
+        System.out.printf(
+                "| %-2d | %-12s | %-10d | %-20s | $ %-15.2f |\n",
+                v.getId(),
+                v.getFecha(),
+                v.getCliente().getId(),
+                v.getCliente().getNombre(),
+                v.getTotalConIva()
+        );
+    }
+
+    System.out.println("=====================================================================================");
+}
+    
 
     private void buscar() {
         System.out.print("\nIngrese el ID de la venta a buscar: ");
@@ -136,8 +162,9 @@ public class Menuventa {
         int op;
         do {
             System.out.println("""
-                               ******************************
-                                       Ventas
+                                ==========================================
+                                            GESTION DE VENTAS
+                                ==========================================
                                1.   Registrar 
                                2.   Eliminar
                                3.   Listar

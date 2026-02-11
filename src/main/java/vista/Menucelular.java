@@ -160,14 +160,19 @@ public class Menucelular {
         int op = 0;
         do {
             System.out.println("""
-                               ******************************
-                                       Celulares
+                               
+                              ==========================================
+                                        GESTION DE CELULARES
+                              ==========================================
+                                     
                                1.   Registrar
                                2.   Actualizar
                                3.   Eliminar
                                4.   Listar
                                5.   Buscar
                                6.   Regresar
+                               ==========================================
+                               
                                """);
             op = new Scanner(System.in).nextInt();
             while (op < 1 || op > 6) {

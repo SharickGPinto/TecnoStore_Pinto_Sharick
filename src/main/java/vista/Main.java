@@ -8,14 +8,17 @@ public class Main {
        int op = 0;
         do {
             System.out.println("""
-                               ******************************
-                               Bienvenido a TecnoStore
-                               1.   Gestionar Marcas
-                               2.   Gestionar Celulares
-                               3.   Gestionar Clientes
-                               4.   Gestionar Ventas
-                               5.   Salir
-                               """);
+             ==========================================
+                     Bienvenido a TecnoStore             
+             ==========================================
+                               
+              1.   Gestionar Marcas
+              2.   Gestionar Celulares
+              3.   Gestionar Clientes
+              4.   Gestionar Ventas
+              5.   Salir
+             ==========================================
+             """);
             op = new Scanner(System.in).nextInt();
             while (op < 1 || op > 5) {
                 System.out.println("Error, opcion no valida");

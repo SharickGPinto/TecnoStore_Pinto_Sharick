@@ -66,4 +66,8 @@ public class GestorVentas {
         public void registrarTienda(Venta v, ArrayList<ItemVenta> items) {
         ventaDAO.registrarTienda(v, items);
     }
+        
+    public ArrayList<Venta> obtenerVentas() {
+    return ventaDAO.listar();
+}
 }

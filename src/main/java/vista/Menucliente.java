@@ -1,43 +1,50 @@
-
 package vista;
 
 import java.util.Scanner;
 import modelo.Cliente;
 import servicios.GestorClientes;
-
+import util.Validador;
 
 public class Menucliente {
+
     GestorClientes gc = new GestorClientes();
     Scanner sc = new Scanner(System.in);
-    
+
     private void registrar() {
+        String correo;
         System.out.println("\n--- REGISTRAR CLIENTE ---");
-        
+
         System.out.print("Ingrese el nombre del cliente: ");
         String nombre = sc.nextLine();
-        
+
         System.out.print("Ingrese la identificacion: ");
         String identificacion = sc.nextLine();
-        
-        System.out.print("Ingrese el correo electronico: ");
-        String correo = sc.nextLine();
-        
+        do {
+            System.out.print("Ingrese el correo electronico: ");
+            correo = sc.nextLine();
+
+            if (!Validador.correoValido(correo)) {
+                System.out.println("Correo invalido. Intente nuevamente.");
+            }
+
+        } while (!Validador.correoValido(correo));
+
         System.out.print("Ingrese el telefono: ");
         String telefono = sc.nextLine();
-        
+
         Cliente cliente = new Cliente(0, nombre, identificacion, correo, telefono);
         gc.registrar(cliente);
     }
-    
+
     private void listar() {
         System.out.println("\n--- LISTADO DE CLIENTES ---");
         gc.listar();
     }
-    
+
     private void buscar() {
         System.out.print("\nIngrese la identificacion del cliente a buscar: ");
         String identificacion = sc.nextLine();
-        
+
         Cliente cli = gc.buscarPorIdentificacion(identificacion);
         if (cli != null && cli.getId() != 0) {
             System.out.println("\nCLIENTE ENCONTRADO:");
@@ -46,16 +53,16 @@ public class Menucliente {
             System.out.println("No existe un cliente con esa identificacion");
         }
     }
-    
+
     private void actualizar() {
         System.out.print("\nIngrese la identificacion del cliente a actualizar: ");
         String identificacion = sc.nextLine();
-        
+
         Cliente cli = gc.buscarPorIdentificacion(identificacion);
         if (cli != null && cli.getId() != 0) {
             System.out.println("\nCLIENTE ENCONTRADO:");
             System.out.println(cli);
-            
+
             System.out.println("""
             Que desea modificar?
             1. Nombre
@@ -65,8 +72,8 @@ public class Menucliente {
             """);
             System.out.print("Opcion: ");
             int opcion = sc.nextInt();
-            sc.nextLine(); 
-            
+            sc.nextLine();
+
             switch (opcion) {
                 case 1:
                     System.out.print("Ingrese el nuevo nombre: ");
@@ -85,20 +92,20 @@ public class Menucliente {
                     cli.setTelefono(sc.nextLine());
                     break;
             }
-            
+
             gc.actualizar(cli, identificacion);
         } else {
             System.out.println("No existe un cliente con esa identificacion");
         }
     }
-    
+
     private void eliminar() {
         System.out.print("\nIngrese la identificacion del cliente a eliminar: ");
         String identificacion = sc.nextLine();
-        
+
         gc.eliminar(identificacion);
     }
-    
+
     public void menu() {
         int op;
         do {
@@ -116,15 +123,15 @@ public class Menucliente {
             """);
             System.out.print("Seleccione una opcion: ");
             op = sc.nextInt();
-            sc.nextLine(); 
-            
+            sc.nextLine();
+
             while (op < 1 || op > 6) {
                 System.out.println("Error, opcion no valida");
                 System.out.print("Seleccione una opcion: ");
                 op = sc.nextInt();
                 sc.nextLine();
             }
-            
+
             switch (op) {
                 case 1:
                     registrar();
@@ -144,5 +151,5 @@ public class Menucliente {
             }
         } while (op != 6);
     }
-    
+
 }

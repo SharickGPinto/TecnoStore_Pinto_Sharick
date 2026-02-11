@@ -56,8 +56,9 @@ public class Menumarca {
         int op = 0;
         do {
             System.out.println("""
-                               ******************************
-                                        Marcas
+                                ==========================================
+                                            GESTION DE MARCAS
+                                ==========================================
                                1.   Registrar
                                2.   Actualizar
                                3.   Eliminar
