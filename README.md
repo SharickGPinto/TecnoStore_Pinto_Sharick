@@ -22,9 +22,8 @@
 <h6 align=center> 5. Estructura del Código (cómo está organizado) </h6> 
 <h6 align=center> 6. Base de Datos (modelo y tablas) </h6>
 <h6 align=center> 7. Persistencia JDBC (cómo se guarda todo) </h6> 
-<h6 align=center> 8. Reportes (Stream API) </h6> 
-<h6 align=center> 9. Archivo reporte_ventas.txt </h6> 
-<h6 align=center> 10. Cómo Ejecutar (pasos cortos) </h6>
+<h6 align=center> 8. Cómo Ejecutar (pasos cortos) </h6>
+<h6 align=center> 9. Capturas </h6>
 
 
 
@@ -232,5 +231,89 @@ CREATE TABLE items_venta (
 );
 
 ```
+# 7. Persistencia JDBC (cómo se guarda todo)
+
+Aquí lo importante es que el proyecto no depende de la RAM: lo que registras en consola se guarda en MySQL.
+## Conexión a base de datos
+* La clase típica del proyecto es ConexionDB.java, que centraliza el getConnection().
+* Se usa JDBC y conexión por URL.
+* Se maneja con try-with-resources, para que la conexión y los statements se cierren solos y no se “queden pegados”.
+
+## DAOs (la forma “de clase” de trabajar)
+
+### La persistencia se divide en:
+* DAO (interfaces): definen lo que se puede hacer (guardar, listar, buscar, actualizar, eliminar).
+* DAOImpl (implementaciones): donde está el SQL real con PreparedStatement.
+
+#### Eso hace que:
+
+* el código quede organizado,
+* sea fácil de mantener,
+* y sea igual a lo que normalmente piden en ejercicios de JDBC.
+
+## Guardar una venta (lo más delicado)
+
+* Registrar una venta no es solo “insertar una fila”, porque realmente pasan varias cosas:
+* Se valida que exista el cliente.
+* Se validan celulares y cantidades (y que el stock alcance).
+* Se calcula total sin IVA y con IVA.
+* Se guarda en ventas (cabecera).
+* Se guarda cada item en items_venta (detalle).
+* Se descuenta stock del celular vendido.
+* La idea es que una venta sea un “bloque completo”, no medias ventas.
+
+---
+
+# 8. Cómo Ejecutar 
+## Crear la base de datos
+
+* Abres MySQL Workbench (o consola)
+- Pegas el script DROP/CREATE/USE + CREATE TABLES
+* Ejecutas.
+
+## Configurar conexión
+
+- Revisas ConexionDB.java
+
+- Confirmas:
+
+- URL (host, puerto, db)
+
+* usuario
+
+- contraseña
+
+## Ejecutar el proyecto
+
+- Corres Main.java
+
+- Te abre el menú principal.
+
+## Probar flujo básico
+
+* Registrar marca
+
+* Registrar celular (con stock)
+
+* Registrar cliente
+
+- Registrar venta
+
+---
+
+# 9. Capturas
+
+[![Diagrama](IMG/cap1.png)](IMG/cap1.png)
+[![Diagrama](IMG/cap2.png)](IMG/cap2.png)
+[![Diagrama](IMG/cap3.png)](IMG/cap3.png)
+[![Diagrama](IMG/cap4.png)](IMG/cap4.png)
+[![Diagrama](IMG/cap5.png)](IMG/cap5.png)
+
+---
+
+## Agradecimientos
+
+Gracias a mi profesor y al entorno de aprendizaje por la guía durante el desarrollo.  
+Este proyecto fue construido siguiendo el estilo y la estructura trabajada en clase, reforzando especialmente JDBC y reportes con Stream API.
 
 
