@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import modelo.Venta;
 
+
+/*
 public class ArchivoUtils {
 
     private ArrayList<Venta> ventas = new ArrayList<>();
@@ -38,3 +40,4 @@ public class ArchivoUtils {
         }
 
     }
+*/
