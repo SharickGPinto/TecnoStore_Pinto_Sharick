@@ -2,6 +2,7 @@
 package servicios;
 
 import java.util.ArrayList;
+import modelo.ItemVenta;
 import modelo.Venta;
 import persistencia.VentaDAO;
 import persistencia.implementar.VentaDAOImpl;
@@ -61,5 +62,8 @@ public class GestorVentas {
        ventaDAO.actualizar(v, v.getId());
         System.out.println("Celular Actualizado");
     }
-
+    
+        public void registrarTienda(Venta v, ArrayList<ItemVenta> items) {
+        ventaDAO.registrarTienda(v, items);
+    }
 }

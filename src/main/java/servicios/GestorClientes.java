@@ -19,7 +19,7 @@ public class GestorClientes {
     //Verifica en la base de datos si existe con esa identificacion, si no existe y el correo es valido se registra
     public void registrar(Cliente c) {
         Cliente existe = clienteDAO.buscar(c.getIdentificacion());
-        if (existe != null) {
+        if (existe != null && existe.getId() != 0) {
             System.out.println("ERROR: YA EXISTE ESTE CLIENTE CON ESTE ID: " + c.getIdentificacion()+ c.getNombre());
             return;
         }
@@ -52,7 +52,7 @@ public class GestorClientes {
         
         Cliente existe = clienteDAO.buscar(identificacion);
         
-        if(existe != null){
+        if(existe != null && existe.getId() != 0){
             clienteDAO.eliminar(identificacion);
             System.out.println("Cliente eliminado");
         }else {
@@ -63,7 +63,7 @@ public class GestorClientes {
     //Valida la existencia del cliente y si el correo esta bien para poder actualizar
     public void actualizar(Cliente c, String identificacionOriginal){
         Cliente existe = buscarPorIdentificacion(c.getIdentificacion());
-        if (existe == null){
+        if (existe != null && existe.getId() != 0){
             System.out.println("No existe");
             return;
         }

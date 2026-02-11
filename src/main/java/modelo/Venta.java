@@ -57,4 +57,16 @@ public class Venta {
         this.totalConIva = totalConIva;
     }
 
+     @Override
+    public String toString() {
+        return """
+               *****************************
+               ID Venta:        %s
+               Fecha:           %s
+               Total sin IVA:   %s
+               Total con IVA:   %s
+               Cliente:
+               %s
+               """.formatted(id, fecha, totalSinIva, totalConIva, cliente);
+    }
 }

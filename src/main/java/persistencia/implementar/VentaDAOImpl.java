@@ -7,13 +7,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import modelo.Cliente;
+import modelo.ItemVenta;
 import modelo.Venta;
 import persistencia.ConexionDB;
 import persistencia.VentaDAO;
 
 public class VentaDAOImpl implements VentaDAO {
 
-    ConexionDB c = new ConexionDB();
+     ConexionDB c = new ConexionDB();
 
     @Override
     public void registrar(Venta v) {
@@ -22,7 +23,7 @@ public class VentaDAOImpl implements VentaDAO {
             ps.setInt(1, v.getCliente().getId());
             ps.setString(2, v.getFecha());
             ps.setDouble(3, v.getTotalSinIva());
-            ps.setDouble(4, v.getTotalConIva());
+            ps.setDouble(4, 0.0); // trigger calcula
             ps.executeUpdate();
             System.out.println("REGISTRO EXITOSO!");
         } catch (SQLException e) {
@@ -85,7 +86,7 @@ public class VentaDAOImpl implements VentaDAO {
             ps.setInt(1, v.getCliente().getId());
             ps.setString(2, v.getFecha());
             ps.setDouble(3, v.getTotalSinIva());
-            ps.setDouble(4, v.getTotalConIva());
+            ps.setDouble(4, 0.0); // trigger recalcula
             ps.setInt(5, id);
             ps.executeUpdate();
             System.out.println("ACTUALIZACION EXITOSA!");
@@ -96,7 +97,93 @@ public class VentaDAOImpl implements VentaDAO {
 
     @Override
     public boolean descontarStock(int idVenta, int cantidad) {
-        // Este metodo no aplica para Ventas
         return false;
+    }
+    @Override
+    public void registrarTienda(Venta v, ArrayList<ItemVenta> items) {
+
+        if (v == null || v.getCliente() == null) {
+            System.out.println("Error: venta o cliente nulo");
+            return;
+        }
+        if (items == null || items.isEmpty()) {
+            System.out.println("Error: no hay items para registrar");
+            return;
+        }
+
+        try (Connection con = c.conectar()) {
+
+           
+            for (ItemVenta it : items) {
+                int idCelular = it.getCelular().getId();
+                int cantidad = it.getCantidad();
+
+                Statement st = con.createStatement();
+                ResultSet rs = st.executeQuery("select stock from celulares where id=" + idCelular);
+                int stock = 0;
+                if (rs.next()) stock = rs.getInt(1);
+
+                if (stock < cantidad) {
+                    System.out.println("Error: stock insuficiente para el celular ID " + idCelular + " (stock " + stock + ")");
+                    return;
+                }
+            }
+
+            
+            PreparedStatement ps = con.prepareStatement(
+                "insert into ventas(id_cliente, fecha, total_sin_iva, total_con_iva) values (?,?,?,?)"
+            );
+            ps.setInt(1, v.getCliente().getId());
+            ps.setString(2, v.getFecha());
+            ps.setDouble(3, v.getTotalSinIva());
+            ps.setDouble(4, 0.0);
+            ps.executeUpdate();
+
+            
+            Statement stId = con.createStatement();
+            ResultSet rsId = stId.executeQuery("select max(id) from ventas");
+            int idVenta = 0;
+            if (rsId.next()) idVenta = rsId.getInt(1);
+            v.setId(idVenta);
+
+           
+            PreparedStatement psItem = con.prepareStatement(
+                "insert into items_venta(id_venta, id_celular, cantidad, subtotal) values (?,?,?,?)"
+            );
+            PreparedStatement psStock = con.prepareStatement(
+                "update celulares set stock = stock - ? where id = ? and stock >= ?"
+            );
+
+            for (ItemVenta it : items) {
+                int idCelular = it.getCelular().getId();
+                int cantidad = it.getCantidad();
+
+                psStock.setInt(1, cantidad);
+                psStock.setInt(2, idCelular);
+                psStock.setInt(3, cantidad);
+                int filas = psStock.executeUpdate();
+
+                if (filas == 0) {
+                    System.out.println("Error: no se pudo descontar stock del celular ID " + idCelular);
+                    return;
+                }
+
+                psItem.setInt(1, idVenta);
+                psItem.setInt(2, idCelular);
+                psItem.setInt(3, cantidad);
+                psItem.setDouble(4, it.getSubtotal());
+                psItem.executeUpdate();
+            }
+
+           
+            Statement stTotal = con.createStatement();
+            ResultSet rsTotal = stTotal.executeQuery("select total_con_iva from ventas where id=" + idVenta);
+            if (rsTotal.next()) v.setTotalConIva(rsTotal.getDouble(1));
+
+            System.out.println("REGISTRO EXITOSO! Venta #" + v.getId());
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

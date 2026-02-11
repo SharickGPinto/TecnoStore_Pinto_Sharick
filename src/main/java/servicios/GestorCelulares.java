@@ -52,7 +52,7 @@ public class GestorCelulares {
     // Se valida la existencia del celular, si no existe sale mensaje, si existe se sobreescribe los datos del registro 
     public void actualizar(Celular c) {
         Celular existe = buscarPorId(c.getId());
-        if (existe == null) {
+        if (existe != null && existe.getId() != 0) {
             System.out.println("No existe un celular con ese ID");
             return;
         }
