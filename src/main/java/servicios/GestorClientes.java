@@ -61,7 +61,7 @@ public class GestorClientes {
     }
     
     //Valida la existencia del cliente y si el correo esta bien para poder actualizar
-    public void actualizar(Cliente c){
+    public void actualizar(Cliente c, String identificacionOriginal){
         Cliente existe = buscarPorIdentificacion(c.getIdentificacion());
         if (existe == null){
             System.out.println("No existe");

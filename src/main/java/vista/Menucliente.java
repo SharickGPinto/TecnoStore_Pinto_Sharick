@@ -86,7 +86,7 @@ public class Menucliente {
                     break;
             }
             
-            gc.actualizar(cli);
+            gc.actualizar(cli, identificacion);
         } else {
             System.out.println("No existe un cliente con esa identificacion");
         }

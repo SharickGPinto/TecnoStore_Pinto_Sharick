@@ -19,7 +19,7 @@ public class ClienteDAOImple implements ClienteDAO{
     @Override 
     public void registrar(Cliente cl) {
         try (Connection con = c.conectar()){
-            PreparedStatement ps = con.prepareStatement("INSERT INTO cliente(nombre, identificacion, correo, telefono) VALUES (?,?,?,?)");
+            PreparedStatement ps = con.prepareStatement("INSERT INTO clientes(nombre, identificacion, correo, telefono) VALUES (?,?,?,?)");
             ps.setString(1, cl.getNombre());
             ps.setString(2, cl.getIdentificacion());
             ps.setString(3, cl.getCorreo());

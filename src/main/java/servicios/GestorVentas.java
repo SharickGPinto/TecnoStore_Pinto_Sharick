@@ -14,7 +14,7 @@ public class GestorVentas {
     // Si cumple la condicion de registrar tiene que verificar si el id existe, si existe genera error, si no existe dentro de la base de datos lo registra.
     public void registrar(Venta v) {
         Venta existe = ventaDAO.buscar(v.getId());
-        if (existe != null) {
+        if (existe != null && existe.getId() != 0)  {
             System.out.println("Error: ya existe una venta con ese ID. " + v.getId());
             return;
         }

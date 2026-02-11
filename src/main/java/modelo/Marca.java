@@ -29,7 +29,9 @@ public class Marca {
 
     @Override
     public String toString() {
-        return nombre;
+        return "Marca existentes " + "id= " + id + ", nombre= " + nombre ;
     }
+
+
     
 }

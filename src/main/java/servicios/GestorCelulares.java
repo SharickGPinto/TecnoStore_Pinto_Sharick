@@ -12,7 +12,7 @@ public class GestorCelulares {
     // Si cumple la condicion de registrar tiene que verificar si el id existe, si existe genera error, si no existe dentro de la base de datos lo registra.
     public void registrar(Celular c) {
         Celular existe = celularDAO.buscar(c.getId());
-        if (existe != null) {
+        if (existe != null && existe.getId() != 0)  {
             System.out.println("Error: ya existe un celular con ese ID. " + c.getId());
             return;
         }
