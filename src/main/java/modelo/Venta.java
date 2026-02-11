@@ -1,6 +1,6 @@
 
 package modelo;
-
+//Aca es donde se hace la suma total de todos los celulares que llegue a comprar el cliente
 public class Venta {
 
   private int id;
@@ -56,7 +56,7 @@ public class Venta {
     public void setTotalConIva(double totalConIva) {
         this.totalConIva = totalConIva;
     }
-
+    //Para poder visualizar venta en texto
      @Override
     public String toString() {
         return """

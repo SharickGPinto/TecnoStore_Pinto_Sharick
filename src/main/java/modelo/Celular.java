@@ -1,6 +1,7 @@
 
 package modelo;
 
+/*Clase que representa celular, esta vinculado con Categoriagama*/
 
 public class Celular {
     private int id;
@@ -76,7 +77,7 @@ public class Celular {
         this.id_marca = id_marca;
     }
 
-
+    // metodo que convierte el celular en texto para poder visualizarlo 
     @Override
     public String toString() {
       return """

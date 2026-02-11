@@ -1,9 +1,9 @@
-package servicios;
+package controlador.servicios;
 
 import java.util.ArrayList;
 import modelo.Celular;
-import persistencia.CelularDAO;
-import persistencia.implementar.CelularDAOimpl;
+import controlador.persistencia.CelularDAO;
+import controlador.persistencia.implementar.CelularDAOimpl;
 
 public class GestorCelulares {
 

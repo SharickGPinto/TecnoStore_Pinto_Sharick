@@ -1,7 +1,7 @@
 
 package modelo;
 
-
+//Aca son las marcas que puedan existir de celulares
 public class Marca {
     private int id;
     private String nombre;

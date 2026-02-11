@@ -7,9 +7,9 @@ import modelo.Celular;
 import modelo.Cliente;
 import modelo.ItemVenta;
 import modelo.Venta;
-import servicios.GestorCelulares;
-import servicios.GestorClientes;
-import servicios.GestorVentas;
+import controlador.servicios.GestorCelulares;
+import controlador.servicios.GestorClientes;
+import controlador.servicios.GestorVentas;
 
 
 public class Menuventa {
@@ -18,7 +18,7 @@ public class Menuventa {
     GestorCelulares gcel = new GestorCelulares();
     Scanner sc = new Scanner(System.in);
 
-    private void registrarVentaTienda() {
+    private void registrar() {
 
         System.out.println("\n--- REGISTRAR VENTA (TIENDA) ---");
 
@@ -92,7 +92,7 @@ public class Menuventa {
 
         Venta venta = new Venta(0, cliente, fecha, totalSinIva, 0.0);
 
-        gv.registrarTienda(venta, items);
+        gv.registrar(venta, items);
 
         if (venta.getId() != 0) {
             System.out.println("\n--- RESUMEN DE VENTA ---");
@@ -157,6 +157,52 @@ public class Menuventa {
         int id = new Scanner(System.in).nextInt();
         gv.eliminar(id);
     }
+    private void actualizar() {
+        System.out.print("\nIngrese el ID de la venta a actualizar: ");
+        int idVenta = new Scanner(System.in).nextInt();
+        sc.nextLine();
+
+        Venta actual = gv.buscarPorId(idVenta);
+        if (actual == null || actual.getId() == 0) {
+            System.out.println("No existe una venta con ese ID.");
+            return;
+        }
+
+        System.out.println("\n--- VENTA ACTUAL ---");
+        System.out.println("ID: " + actual.getId());
+        System.out.println("Fecha: " + actual.getFecha());
+        System.out.println("Cliente: " + actual.getCliente().getNombre() + " (" + actual.getCliente().getIdentificacion() + ")");
+        System.out.println("Total sin IVA: " + actual.getTotalSinIva());
+        System.out.println("Total con IVA: " + actual.getTotalConIva());
+
+        System.out.print("\nNueva fecha (YYYY-MM-DD) (ENTER para dejar igual): ");
+        String nuevaFecha = sc.nextLine();
+        if (nuevaFecha.isBlank()) {
+            nuevaFecha = actual.getFecha();
+        }
+
+        System.out.println("\n--- CLIENTES ---");
+        gcli.listar();
+        System.out.print("Nueva identificacion del cliente (ENTER para dejar igual): ");
+        String nuevaIdent = sc.nextLine();
+
+        Cliente nuevoCliente = actual.getCliente();
+        if (!nuevaIdent.isBlank()) {
+            Cliente c = gcli.buscarPorIdentificacion(nuevaIdent);
+            if (c == null || c.getId() == 0) {
+                System.out.println("No existe un cliente con esa identificacion.");
+                return;
+            }
+            nuevoCliente = c;
+        }
+
+        //  NO estamos cambiando los items; se mantiene el total_sin_iva actual.
+        // El trigger de la BD recalcula el total_con_iva.
+        Venta editada = new Venta(actual.getId(), nuevoCliente, nuevaFecha, actual.getTotalSinIva(), 0.0);
+        gv.actualizar(editada);
+    }
+    
+    
 
     public void menu() {
         int op;
@@ -166,31 +212,35 @@ public class Menuventa {
                                             GESTION DE VENTAS
                                 ==========================================
                                1.   Registrar 
-                               2.   Eliminar
-                               3.   Listar
-                               4.   Buscar
-                               5.   Regresar
+                               2.   Actualizar
+                               3.   Eliminar
+                               4.   Listar
+                               5.   Buscar
+                               6.   Regresar
                                """);
             op = new Scanner(System.in).nextInt();
-            while (op < 1 || op > 5) {
+            while (op < 1 || op > 6) {
                 System.out.println("Error, opcion no valida");
                 op = new Scanner(System.in).nextInt();
             }
             switch (op) {
                 case 1:
-                    registrarVentaTienda();
+                    registrar();
                     break;
                 case 2:
-                    eliminar();
+                    actualizar();
                     break;
                 case 3:
-                    listar();
+                    eliminar();
                     break;
                 case 4:
+                    listar();
+                    break;
+                case 5:
                     buscar();
                     break;
             }
-        } while (op != 5);
+        } while (op != 6);
     }
 }
     

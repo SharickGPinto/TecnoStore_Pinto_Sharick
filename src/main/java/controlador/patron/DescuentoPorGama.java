@@ -1,5 +1,5 @@
 
-package patron;
+package controlador.patron;
 
 import java.util.List;
 import modelo.CategoriaGama;

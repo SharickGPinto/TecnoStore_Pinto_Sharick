@@ -1,6 +1,6 @@
 
 package modelo;
-
+// clase cliente 
 public class Cliente{
 
     private int id;
@@ -53,6 +53,8 @@ public class Cliente{
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+    
+    //Metodo para mostrar cliente en texto 
     
     @Override
     public String toString() {

@@ -1,9 +1,9 @@
-package servicios;
+package controlador.servicios;
 
 import java.util.ArrayList;
 import modelo.Marca;
-import persistencia.MarcaDAO;
-import persistencia.implementar.MarcaDAOImpl;
+import controlador.persistencia.MarcaDAO;
+import controlador.persistencia.implementar.MarcaDAOImpl;
 
 public class GestorMarca {
 

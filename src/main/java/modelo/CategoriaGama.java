@@ -1,7 +1,9 @@
 
 package modelo;
 
-
+/*
+Se crea categoriagama como enum para evitar que el usuario inserte datos incorrectos
+*/
 public enum CategoriaGama {
     
     ALTA, MEDIA, BAJA;

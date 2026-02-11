@@ -139,6 +139,7 @@ TecnoStore/
 │           │  ├─ Celular.java
 │           │  ├─ Cliente.java
 │           │  ├─ Venta.java
+│           │  ├─ Marca.java
 │           │  ├─ ItemVenta.java
 │           │  └─ CategoriaGama.java
 │           │
@@ -152,10 +153,12 @@ TecnoStore/
 │           │  ├─ dao/
 │           │  │  ├─ CelularDAO.java
 │           │  │  ├─ ClienteDAO.java
+│           │  │  ├─ MarcaDAO.java
 │           │  │  └─ VentaDAO.java
 │           │  └─ daoimpl/
 │           │     ├─ CelularDAOImpl.java
 │           │     ├─ ClienteDAOImpl.java
+│           │     ├─ MarcaDAOImpl.java
 │           │     └─ VentaDAOImpl.java
 │           │
 │           ├─ utilidades/
@@ -165,6 +168,10 @@ TecnoStore/
 │           │
 │           └─ vista/
 │              └─ Main.java
+│           │     ├─ Menuventa.java
+│           │     ├─ Menucliente.java
+│           │     ├─ Menucelular.java
+│           │     └─ Menumarca.java
 ```
 
 ---
@@ -172,12 +179,17 @@ TecnoStore/
 # 6. Base de Datos (MySQL)
 
 ```
+DROP DATABASE IF EXISTS tecnostore_db;
+CREATE DATABASE tecnostore_db;
+USE tecnostore_db;
+
+-- Marcas
 CREATE TABLE marcas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL UNIQUE
 );
 
--- Tabla de Celulares
+-- Celulares
 CREATE TABLE celulares (
     id INT AUTO_INCREMENT PRIMARY KEY,
     modelo VARCHAR(100) NOT NULL,
@@ -189,7 +201,7 @@ CREATE TABLE celulares (
     FOREIGN KEY (id_marca) REFERENCES marcas(id) ON DELETE CASCADE
 );
 
--- Tabla de Clientes
+-- Clientes
 CREATE TABLE clientes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
@@ -198,7 +210,7 @@ CREATE TABLE clientes (
     telefono VARCHAR(20) NOT NULL
 );
 
--- Tabla de Ventas
+-- Ventas
 CREATE TABLE ventas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_cliente INT NOT NULL,
@@ -208,7 +220,7 @@ CREATE TABLE ventas (
     FOREIGN KEY (id_cliente) REFERENCES clientes(id) ON DELETE CASCADE
 );
 
--- Tabla de Items de Venta
+-- Items de venta
 CREATE TABLE items_venta (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_venta INT NOT NULL,
@@ -220,3 +232,5 @@ CREATE TABLE items_venta (
 );
 
 ```
+
+

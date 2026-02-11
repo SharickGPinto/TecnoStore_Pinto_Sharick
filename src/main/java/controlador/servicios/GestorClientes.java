@@ -1,11 +1,11 @@
-package servicios;
+package controlador.servicios;
 
 
 
 import java.util.ArrayList;
 import modelo.Cliente;
-import persistencia.ClienteDAO;
-import persistencia.implementar.ClienteDAOImple;
+import controlador.persistencia.ClienteDAO;
+import controlador.persistencia.implementar.ClienteDAOImple;
 
 public class GestorClientes {
     

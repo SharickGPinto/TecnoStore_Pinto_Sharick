@@ -1,4 +1,4 @@
-package persistencia.implementar;
+package controlador.persistencia.implementar;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,14 +7,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import modelo.Marca;
-import persistencia.ConexionDB;
-import persistencia.MarcaDAO;
+import controlador.persistencia.ConexionDB;
+import controlador.persistencia.MarcaDAO;
 
 public class MarcaDAOImpl implements MarcaDAO {
 
     ConexionDB c = new ConexionDB();
 
     @Override
+    //metodo para poder registrar una nueva marca
     public void registrar(Marca m) {
         try (Connection con = c.conectar()) {
             PreparedStatement ps = con.prepareStatement("insert into marcas(nombre) values (?)");
@@ -26,6 +27,7 @@ public class MarcaDAOImpl implements MarcaDAO {
         }
     }
 
+    //metodo para poder actualizar la marca 
     @Override
     public void actualizar(Marca m, int id) {
         try (Connection con = c.conectar()) {
@@ -38,7 +40,7 @@ public class MarcaDAOImpl implements MarcaDAO {
             System.out.println(e.getMessage());
         }
     }
-
+  //metodo para poder eliminar una marca 
     @Override
     public void eliminar(int id) {
         try (Connection con = c.conectar()) {
@@ -50,9 +52,10 @@ public class MarcaDAOImpl implements MarcaDAO {
             System.out.println(e.getMessage());
         }
     }
-
+    //metodo para poder ver las marcas existentes  
     @Override
     public ArrayList<Marca> listar() {
+         // lista vacia donde se guardaran las marcas
         ArrayList<Marca> marcas = new ArrayList<>();
         try (Connection con = c.conectar()) {
             Statement st = con.createStatement();
@@ -65,7 +68,7 @@ public class MarcaDAOImpl implements MarcaDAO {
         }
         return marcas;
     }
-
+    //metodo para poder buscar la marca mediante le id
     @Override
     public Marca buscar(int id) {
         Marca m = new Marca(0, "");

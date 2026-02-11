@@ -2,8 +2,8 @@ package vista;
 
 import java.util.Scanner;
 import modelo.Cliente;
-import servicios.GestorClientes;
-import util.Validador;
+import controlador.servicios.GestorClientes;
+import controlador.util.Validador;
 
 public class Menucliente {
 

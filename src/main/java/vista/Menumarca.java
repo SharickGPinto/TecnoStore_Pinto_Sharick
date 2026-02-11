@@ -3,7 +3,7 @@ package vista;
 
 import java.util.Scanner;
 import modelo.Marca;
-import servicios.GestorMarca;
+import controlador.servicios.GestorMarca;
 
 
 public class Menumarca {

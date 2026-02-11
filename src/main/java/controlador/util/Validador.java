@@ -1,5 +1,5 @@
 
-package util;
+package controlador.util;
 
 
 public class Validador {

@@ -1,5 +1,5 @@
 
-package persistencia.implementar;
+package controlador.persistencia.implementar;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,18 +8,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import modelo.Cliente;
-import persistencia.ClienteDAO;
-import persistencia.ConexionDB;
+import controlador.persistencia.ClienteDAO;
+import controlador.persistencia.ConexionDB;
 
 
 public class ClienteDAOImple implements ClienteDAO{
     
-    ConexionDB c = new ConexionDB();
+    ConexionDB c = new ConexionDB(); //Coneexion de la base de datos
 
     @Override 
-    public void registrar(Cliente cl) {
+    public void registrar(Cliente cl) {  //metodo para registrar un nuevo cliente
         try (Connection con = c.conectar()){
             PreparedStatement ps = con.prepareStatement("INSERT INTO clientes(nombre, identificacion, correo, telefono) VALUES (?,?,?,?)");
+            //Asignar valores del cliente con los parametros 
             ps.setString(1, cl.getNombre());
             ps.setString(2, cl.getIdentificacion());
             ps.setString(3, cl.getCorreo());
@@ -32,6 +33,7 @@ public class ClienteDAOImple implements ClienteDAO{
 
     @Override
     public ArrayList<Cliente> listar() {
+        // lista vacia donde se guardaran los clientes
       ArrayList<Cliente> clientes = new ArrayList<>();
         try (Connection con = c.conectar();
              Statement st = con.createStatement();
@@ -43,10 +45,12 @@ public class ClienteDAOImple implements ClienteDAO{
             System.out.println(e.getMessage());
         }
         return clientes;
+        
+        //Aca se muestra los clientes que estan registrador dentro de la base de datos
     }
     @Override
-    public Cliente buscar(String identificacion) {
-        Cliente cl = new Cliente(0, "", "", "", "");
+    public Cliente buscar(String identificacion) { //Se busca el cliente mediante el numero de identificacion
+        Cliente cl = new Cliente(0, "", "", "", "");  //Se crea un cliente vacio para evitar errores si no se llega a encontrar el cliente con su identificacion, no se cierre o dañe el programa
          try (Connection con = c.conectar()) {
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select * from clientes where identificacion='" + identificacion + "'");
@@ -62,7 +66,7 @@ public class ClienteDAOImple implements ClienteDAO{
         }
         return cl;
     }
-
+//para eliminar un cliente d ela base de datos
     @Override
     public void eliminar(String identificacion) {
         try (Connection con = c.conectar()) {
@@ -74,6 +78,8 @@ public class ClienteDAOImple implements ClienteDAO{
             System.out.println(e.getMessage());
         }
     }
+    
+    //aca para poder actualizar los datos de la persona si se llega a introducir mal
     @Override
     public void actualizar(Cliente cl, String identificacion) {
         try (Connection con = c.conectar()) {

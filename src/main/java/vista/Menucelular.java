@@ -4,8 +4,8 @@ import java.util.Scanner;
 import modelo.CategoriaGama;
 import modelo.Celular;
 import modelo.Marca;
-import servicios.GestorCelulares;
-import servicios.GestorMarca;
+import controlador.servicios.GestorCelulares;
+import controlador.servicios.GestorMarca;
 
 public class Menucelular {
 

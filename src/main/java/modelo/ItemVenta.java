@@ -1,6 +1,6 @@
 
 package modelo;
-
+// ItemVenta esta vinculado con Venta, es de un celular, se mira la cantidad que se vaya a comprar dando el subtotal
 public class ItemVenta {
     private int id;
     private Celular celular;

@@ -1,9 +1,9 @@
 
-package persistencia;
+package controlador.persistencia;
 
 import java.util.ArrayList;
 import modelo.Celular;
-
+//Se diseña esta interfaz para centralizar todas las acciones que podemos hacer con los celulares en la base de datos, para matener codigo organizado
 public interface CelularDAO {
     
    void registrar(Celular c);
