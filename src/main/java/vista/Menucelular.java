@@ -170,7 +170,8 @@ public class Menucelular {
                                3.   Eliminar
                                4.   Listar
                                5.   Buscar
-                               6.   Regresar
+                               6.   ALERTA
+                               7.   SALIR   
                                ==========================================
                                
                                """);
@@ -195,7 +196,10 @@ public class Menucelular {
                 case 5:
                     buscar();
                     break;
+                    case 6:
+                    buscar();
+                    break;
             }
-        } while (op != 6);
+        } while (op != 7);
     }
 }

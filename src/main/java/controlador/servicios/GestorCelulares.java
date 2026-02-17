@@ -64,6 +64,5 @@ public class GestorCelulares {
     public boolean descontarStock(int idCelular, int cantidad) {
         if (cantidad <= 0) return false;
         return celularDAO.descontarStock(idCelular, cantidad);
-    
     }
 }

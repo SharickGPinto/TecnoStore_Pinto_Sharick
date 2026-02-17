@@ -131,5 +131,5 @@ public class CelularDAOimpl implements CelularDAO{
             System.out.println(e.getMessage());
             return false;
         }
-    } 
+    }
 }

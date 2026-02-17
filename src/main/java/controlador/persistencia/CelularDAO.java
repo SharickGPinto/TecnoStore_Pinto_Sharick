@@ -8,7 +8,7 @@ public interface CelularDAO {
     
    void registrar(Celular c);
    
-    ArrayList<Celular> listar ();
+   ArrayList<Celular> listar ();
    
    Celular buscar(int id);
    
@@ -17,5 +17,5 @@ public interface CelularDAO {
    void actualizar (Celular c, int id);
    
    boolean descontarStock (int idCelular, int cantidad);
-    
+      
 }

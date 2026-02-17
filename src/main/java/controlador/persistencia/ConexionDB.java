@@ -17,7 +17,7 @@ public class ConexionDB {
     public Connection conectar() {
         Connection con = null;
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/tecnostore_db", "root", "sharick.pinto");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/tecnostore_db", "campus2023", "campus2023");
             System.out.println("Conexion exitosa");
 //            c=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+database,user,password);
         } catch (SQLException e) {
